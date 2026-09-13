@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Олександр Ізотов — Google Ads для ремонтних та будівельних компаній</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0D0F;
+    --surface:#161619;
+    --surface-2:#1E1E22;
+    --ink:#F3F1ED;
+    --muted:#9C9A96;
+    --accent:#D6334A;
+    --accent-dark:#B02840;
+    --accent-soft:rgba(214,51,74,0.14);
+    --line:#2A2A2E;
+    --page-w:420px;
+  }
+  *{box-sizing:border-box;}
+  html{ scroll-behavior:smooth; background:var(--bg); }
+  body{
+    margin:0; background:var(--bg); color:var(--ink); min-height:100vh;
+    font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:var(--page-w); margin:0 auto; padding:0 20px 32px; background:var(--bg); min-height:100vh; transition:max-width .2s ease; }
+
+  /* header */
+  header{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px; margin:0 auto;
+    max-width:var(--page-w);
+    background:rgba(13,13,15,0.82);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    transition:max-width .2s ease;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px; min-width:0;
+    text-decoration:none; color:inherit; cursor:pointer;
+    transition:opacity .15s ease;
+  }
+  .brand:hover{ opacity:.85; }
+  .avatar{
+    width:34px; height:34px; border-radius:50%; object-fit:cover;
+    border:1px solid var(--line); flex-shrink:0;
+  }
+  .brand-text .name{ font-family:'Sora',sans-serif; font-weight:700; font-size:13px; letter-spacing:-0.01em; white-space:nowrap; }
+  .brand-text .tag{ font-size:9.5px; color:var(--muted); white-space:nowrap; }
+  .nav-right{ display:flex; align-items:center; gap:14px; flex-shrink:0; }
+  .nav-link{
+    font-size:12px; font-weight:600; color:var(--muted); text-decoration:none;
+    transition:color .15s ease;
+  }
+  .nav-link:hover{ color:var(--ink); }
+  .icon-btn{
+    width:32px; height:32px; border-radius:9px; background:var(--accent); color:#fff;
+    display:flex; align-items:center; justify-content:center; text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease; flex-shrink:0;
+  }
+  .icon-btn:hover{ transform:translateY(-1px); box-shadow:0 6px 18px -6px rgba(214,51,74,0.7); }
+  .icon-btn svg{ width:15px; height:15px; }
+
+  /* hero */
+  .hero{ padding:32px 0 0; text-align:center; }
+  h1{
+    font-family:'Sora',sans-serif; font-weight:600; font-size:26px; line-height:1.22;
+    letter-spacing:-0.01em; margin:0 0 12px;
+  }
+  h1 .accent{ color:var(--accent); font-weight:700; }
+  .sub{ font-size:14px; line-height:1.6; color:var(--muted); margin:0 0 22px; }
+  .sub b{ color:var(--ink); font-weight:600; }
+
+  .cta-row{ display:flex; gap:9px; justify-content:center; flex-wrap:wrap; margin-bottom:8px; }
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px;
+    padding:13px 22px; border-radius:999px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:7px; border:none; cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn-ghost{ background:var(--surface-2); color:var(--ink); border:1px solid var(--line); }
+  .btn-ghost:hover{ transform:translateY(-1px); border-color:#3a3a40; }
+  .btn-primary{ background:var(--accent); color:#fff; }
+  .btn-primary:hover{ background:var(--accent-dark); transform:translateY(-2px); box-shadow:0 10px 26px -10px rgba(214,51,74,0.6); }
+  .btn-primary svg{ width:14px; height:14px; }
+  .microcopy{ font-size:11px; color:var(--muted); margin-bottom:22px; }
+
+  /* ---------- animated growth chart ---------- */
+  .chart-block{ margin-bottom:26px; }
+  .chart-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    overflow:hidden;
+  }
+  .chart-head{
+    display:flex; align-items:center; gap:4px; padding:10px 14px;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .chart-head span{ width:6px; height:6px; border-radius:50%; background:#3a3a40; }
+  .chart-head em{ font-style:normal; font-size:10px; color:var(--muted); margin-left:6px; }
+  .chart-svg-wrap{ position:relative; padding:6px 14px 4px; }
+  .chart-svg-wrap svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .chart-grid line{ stroke:var(--line); stroke-width:1; opacity:.6; }
+  .chart-area{ opacity:0; animation:chartFadeIn .9s ease forwards; animation-delay:.9s; }
+  .chart-line{
+    fill:none; stroke:var(--accent); stroke-width:1.6; stroke-linecap:round;
+    stroke-dasharray:1; stroke-dashoffset:1;
+    animation:chartDraw 1.7s cubic-bezier(.65,0,.35,1) forwards;
+  }
+  .chart-dot{ opacity:0; transform-origin:280px 14px; animation:chartPop .35s ease forwards; animation-delay:1.55s; }
+  .chart-pulse{
+    opacity:0; transform-origin:280px 14px;
+    animation:chartPulse 2.2s ease-out infinite; animation-delay:1.6s;
+  }
+  .chart-label{
+    opacity:0; animation:chartLabelIn .5s ease forwards; animation-delay:1.7s;
+  }
+  @keyframes chartDraw{ to{ stroke-dashoffset:0; } }
+  @keyframes chartFadeIn{ to{ opacity:1; } }
+  @keyframes chartPop{ from{ opacity:0; transform:scale(.3);} to{ opacity:1; transform:scale(1);} }
+  @keyframes chartPulse{
+    0%{ opacity:.55; transform:scale(.6); }
+    100%{ opacity:0; transform:scale(2.6); }
+  }
+  @keyframes chartLabelIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .chart-caption{ text-align:center; font-size:11px; color:var(--muted); margin-top:8px; }
+  @media (prefers-reduced-motion:reduce){
+    .chart-area{ animation:none; opacity:1; }
+    .chart-line{ animation:none; stroke-dashoffset:0; }
+    .chart-dot{ animation:none; opacity:1; }
+    .chart-pulse{ display:none; }
+    .chart-label{ animation:none; opacity:1; }
+  }
+
+  /* scroll/view reveal — pure CSS so it always plays, even if JS is slow */
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:translateY(0);} }
+  .reveal-io{ animation:fadeUp .5s ease both; }
+  @media (prefers-reduced-motion:reduce){
+    .reveal-io{ animation:none; opacity:1; transform:none; }
+  }
+
+  /* card (audit form) */
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    padding:22px 20px; margin-bottom:22px;
+    box-shadow:0 20px 50px -30px rgba(0,0,0,0.6);
+  }
+  .card h2{ font-family:'Sora',sans-serif; font-weight:600; font-size:17px; margin:0 0 4px; letter-spacing:-0.01em; }
+  .card p.desc{ color:var(--muted); font-size:12.5px; margin:0 0 16px; line-height:1.5; }
+  form{ display:flex; flex-direction:column; gap:12px; }
+  .row2{ display:flex; gap:10px; }
+  .row2 .field{ flex:1; min-width:0; }
+  .field label{ display:block; font-size:11px; font-weight:600; color:var(--ink); margin-bottom:4px; }
+  .field input, .field select{
+    width:100%; font-family:'Inter',sans-serif; font-size:13px;
+    padding:10px 11px; border-radius:10px; border:1px solid var(--line);
+    background:var(--surface-2); color:var(--ink); outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .field input:focus, .field select:focus{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .field input::placeholder{ color:#6E6C68; }
+  select{ appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239C9A96' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 11px center;
+  }
+  select option{ background:var(--surface-2); color:var(--ink); }
+
+  .budget-value{ color:var(--accent); font-weight:700; }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
+    background:var(--line); outline:none; margin:6px 0 2px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+    background:var(--accent); cursor:pointer; box-shadow:0 0 0 4px var(--accent-soft);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:var(--accent); border:none; cursor:pointer;
+    box-shadow:0 0 0 4px var(--accent-soft);
+  }
+  .range-ticks{ display:flex; justify-content:space-between; font-size:9.5px; color:#6E6C68; margin-bottom:2px; }
+
+  .submit{
+    margin-top:4px; background:var(--accent); color:#fff; font-weight:600; font-size:13.5px;
+    padding:13px; border:none; border-radius:12px; cursor:pointer;
+    transition:background .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .submit:hover{ background:var(--accent-dark); transform:translateY(-1px); box-shadow:0 10px 24px -10px rgba(214,51,74,0.55); }
+  .form-note{ font-size:10.5px; color:var(--muted); text-align:center; margin-top:2px; }
+  @media (max-width:380px){ .row2{ flex-direction:column; } }
+
+  footer{ text-align:center; padding-top:4px; }
+  .badge{
+    display:inline-flex; align-items:center; gap:7px; background:var(--surface-2); border:1px solid var(--line);
+    padding:7px 14px; border-radius:999px; font-size:11px; color:var(--muted); margin-bottom:10px;
+  }
+  .badge svg{ width:13px; height:13px; }
+  .footer-name{ font-size:11px; color:#6E6C68; line-height:1.5; }
+  .footer-name b{ color:var(--muted); }
+
+  /* ---------- cases ---------- */
+  .cases-block{ margin-bottom:24px; }
+  .section-title{
+    font-family:'Sora',sans-serif; font-weight:600; font-size:17px;
+    margin:0 0 3px; letter-spacing:-0.01em;
+  }
+  .section-sub{ font-size:12px; color:var(--muted); margin:0 0 14px; }
+  #casesView{ padding-top:20px; }
+  .back-btn{
+    display:inline-flex; align-items:center; gap:6px; background:none; border:none;
+    font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600; color:var(--muted);
+    cursor:pointer; padding:0; margin-bottom:16px; text-decoration:none;
+    transition:color .15s ease;
+  }
+  .back-btn:hover{ color:var(--ink); }
+  .back-btn svg{ width:14px; height:14px; }
+
+  .case-card{
+    border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    background:var(--surface); margin-bottom:10px; cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    text-decoration:none; display:block; color:var(--ink);
+  }
+  .case-card:hover{ transform:translateY(-3px); border-color:#3a2226; box-shadow:0 16px 34px -22px rgba(214,51,74,0.45); }
+  .case-thumb{ position:relative; height:98px; background:var(--surface-2); overflow:hidden; }
+  .dash-bar{
+    display:flex; align-items:center; gap:4px; padding:7px 9px;
+    border-bottom:1px solid rgba(255,255,255,0.05); position:relative; z-index:2;
+  }
+  .dash-bar span{ width:5px; height:5px; border-radius:50%; background:#3a3a40; }
+  .dash-bar em{ font-style:normal; font-size:8.5px; color:var(--muted); margin-left:6px; }
+  .dash-stats{ display:flex; gap:8px; padding:7px 9px 0; position:relative; z-index:2; }
+  .dash-stats > div{ flex:1; min-width:0; }
+  .dash-stats .stat-num{
+    display:flex; align-items:center; gap:4px;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:var(--ink);
+  }
+  .dash-stats .stat-num svg{ width:10.5px; height:10.5px; color:var(--accent); flex-shrink:0; }
+  .dash-stats .stat-lbl{ font-size:7.5px; color:var(--muted); margin-top:1px; }
+  .case-thumb .chart{ position:absolute; bottom:0; left:0; width:100%; height:46px; z-index:1; opacity:0.9; }
+  .case-caption{ padding:9px 11px 11px; }
+  .cc-title{ font-size:12.5px; font-weight:600; color:var(--ink); }
+  .cc-sub{ font-size:10.5px; color:var(--muted); margin-top:1px; }
+
+  /* ---------- case detail page ---------- */
+  #caseDetailView{ padding-top:20px; }
+  .detail-eyebrow{ font-size:11.5px; font-weight:600; color:var(--accent); margin-bottom:6px; }
+  #caseDetailView h3{
+    font-family:'Sora',sans-serif; font-weight:600; font-size:21px; line-height:1.28;
+    margin:0 0 10px; letter-spacing:-0.01em;
+  }
+  #caseDetailView > p{ font-size:13.5px; color:var(--muted); line-height:1.6; margin:0 0 18px; }
+  .detail-image{
+    height:150px; border-radius:14px; overflow:hidden;
+    background:var(--surface-2); border:1px solid var(--line); margin-bottom:20px;
+  }
+  .result-highlight{
+    background:var(--ink); border:none; border-radius:12px;
+    padding:14px 16px 14px 28px; margin-bottom:20px; position:relative;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:14.5px; line-height:1.4; color:var(--bg);
+  }
+  .result-highlight::before{
+    content:'"'; position:absolute; top:0px; left:12px; font-family:'Sora',sans-serif;
+    font-size:34px; font-weight:800; color:var(--accent); opacity:.35; line-height:1;
+  }
+  .detail-body{ display:flex; flex-direction:column; gap:20px; padding-bottom:30px; }
+  .modal-h{ font-size:12px; font-weight:700; color:var(--ink); margin-bottom:8px; }
+  .detail-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .detail-col li{ position:relative; padding-left:22px; font-size:13px; color:var(--muted); line-height:1.55; }
+  .detail-col li::before{
+    content:''; position:absolute; left:0; top:3px; width:14px; height:14px;
+    background-repeat:no-repeat; background-position:center; background-size:contain;
+  }
+  .detail-col:first-child li::before{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239C9A96' stroke-width='2'><circle cx='12' cy='12' r='4'/></svg>");
+  }
+  .detail-col:last-child li{ color:var(--ink); }
+  .detail-col:last-child li::before{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D6334A' stroke-width='2.6'><path d='M5 13l4 4L19 7'/></svg>");
+  }
+
+  /* ---------- about page ---------- */
+  #aboutView{ padding-top:20px; padding-bottom:20px; }
+  .about-photo{
+    width:100%; border-radius:16px; overflow:hidden; border:1px solid var(--line);
+    margin-bottom:18px; background:var(--surface-2);
+    box-shadow:0 30px 60px -30px rgba(214,51,74,0.35);
+  }
+  .about-photo img{ width:100%; display:block; object-fit:cover; }
+  .about-name{ font-family:'Sora',sans-serif; font-weight:700; font-size:21px; margin:0 0 4px; letter-spacing:-0.01em; }
+  .about-role{ font-size:12.5px; color:var(--accent); font-weight:600; margin:0 0 16px; }
+  .about-stats{ display:flex; gap:8px; margin-bottom:20px; }
+  .about-stats .stat{
+    flex:1; background:var(--ink); border-radius:12px; padding:10px 8px; text-align:center;
+  }
+  .about-stats .stat .n{ font-family:'Sora',sans-serif; font-weight:800; font-size:16px; color:var(--bg); }
+  .about-stats .stat .l{ font-size:8.5px; color:#5a5854; margin-top:2px; line-height:1.3; }
+  .about-body p{ font-size:13.5px; line-height:1.65; color:var(--muted); margin:0 0 14px; }
+  .about-body p b{ color:var(--ink); }
+  .about-note{
+    background:var(--ink); border:none; border-radius:12px;
+    padding:14px 16px; font-size:12.5px !important; line-height:1.6; color:var(--bg) !important;
+    position:relative;
+  }
+  .about-note::before{
+    content:'"'; position:absolute; top:2px; left:12px; font-family:'Sora',sans-serif;
+    font-size:34px; font-weight:800; color:var(--accent); opacity:.35; line-height:1;
+  }
+  .about-note{ padding-left:28px; }
+  .about-cta{ width:100%; justify-content:center; margin-top:6px; }
+
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ================= RESPONSIVE: tablet & desktop ================= */
+  @media (min-width:640px){
+    :root{ --page-w:600px; }
+    .hero{ padding-top:44px; }
+    h1{ font-size:32px; }
+    .sub{ font-size:15px; max-width:480px; margin-left:auto; margin-right:auto; }
+    .cases-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+    .case-card{ margin-bottom:0; }
+    .about-photo{ max-width:420px; margin-left:auto; margin-right:auto; }
+    .about-name, .about-role{ text-align:center; }
+    .about-stats{ max-width:420px; margin-left:auto; margin-right:auto; }
+  }
+
+  @media (min-width:1024px){
+    :root{ --page-w:820px; }
+    header{ padding-left:32px; padding-right:32px; }
+    .wrap{ padding-left:32px; padding-right:32px; }
+
+    .hero-row{
+      display:grid; grid-template-columns:1.05fr 0.95fr; gap:40px; align-items:center;
+      padding-top:20px;
+    }
+    .hero{ padding-top:0; text-align:left; }
+    h1{ font-size:38px; }
+    .sub{ text-align:left; margin-left:0; margin-right:0; max-width:440px; }
+    .cta-row{ justify-content:flex-start; }
+    .microcopy{ text-align:left; }
+    .chart-block{ margin-bottom:0; }
+
+    .cases-grid{ grid-template-columns:repeat(3, 1fr); }
+
+    .about-row{ display:grid; grid-template-columns:280px 1fr; gap:36px; align-items:start; }
+    .about-photo{ margin:0; max-width:none; }
+    .about-name, .about-role{ text-align:left; }
+    .about-stats{ margin:0 0 20px; max-width:none; }
+    .about-body p, .about-note{ max-width:560px; }
+
+    #caseDetailView{ max-width:680px; }
+    #caseDetailView > p{ max-width:560px; }
+    .detail-body{ flex-direction:row; gap:32px; }
+    .detail-col{ flex:1; }
+  }
+
+  @media (min-width:1280px){
+    :root{ --page-w:1000px; }
+  }
+
+  @media (min-width:1440px){
+    :root{ --page-w:1120px; }
+    h1{ font-size:42px; }
+    .hero-row{ gap:56px; }
+    .chart-svg-wrap{ padding:10px 20px 6px; }
+    .case-thumb{ height:112px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#home">
+    <img class="avatar" src="avatar.jpg" alt="Олександр Ізотов">
+    <div class="brand-text">
+      <div class="name">INTERIOR LEADS</div>
+      <div class="tag">Google Ads · Ремонт & Будівництво</div>
+    </div>
+  </a>
+  <nav class="nav-right">
+    <a class="nav-link" href="#about">Про мене</a>
+    <a class="nav-link" href="#cases">Кейси</a>
+    <a class="icon-btn" href="https://t.me/your_telegram" target="_blank" rel="noopener" aria-label="Написати в Telegram">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.2c.3-1-.5-1.7-1.4-1.4L2.9 9.6c-1 .4-1 1.9.1 2.2l4.4 1.4 1.7 5.4c.3 1 1.6 1.2 2.2.3l2.4-3.3 4.6 3.4c.8.6 2 .2 2.2-.8L21.9 4.2Z"/></svg>
+    </a>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <div id="homeView">
+  <div class="hero-row">
+  <section class="hero">
+    <h1>Google Ads, що приносить <span class="accent">заявки на ремонт</span></h1>
+    <p class="sub"><b>Повне ведення кампанії</b>, перші ліди — за 7–10 днів. Працюю з рекламними бюджетами від <b>$500/міс</b>.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#audit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Подати заявку на співпрацю
+      </a>
+    </div>
+    <div class="microcopy">Заповнення форми займає менше хвилини</div>
+  </section>
+
+  <div class="chart-block">
+    <div class="chart-card" aria-hidden="true">
+      <div class="chart-head"><span></span><span></span><span></span><em>Google Ads · Заявки за місяць</em></div>
+      <div class="chart-svg-wrap">
+        <svg viewBox="0 0 300 100" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="areaFade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D6334A" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#D6334A" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g class="chart-grid">
+            <line x1="0" y1="20" x2="300" y2="20"/>
+            <line x1="0" y1="50" x2="300" y2="50"/>
+            <line x1="0" y1="80" x2="300" y2="80"/>
+          </g>
+          <path class="chart-area" d="M0,85 C23,78 47,73 70,67 C93,61 117,57 140,52 C163,47 187,40 210,35 C233,30 257,22 280,14 L280,100 L0,100 Z" fill="url(#areaFade)"/>
+          <path class="chart-line" pathLength="1" d="M0,85 C23,78 47,73 70,67 C93,61 117,57 140,52 C163,47 187,40 210,35 C233,30 257,22 280,14"/>
+          <circle class="chart-pulse" cx="280" cy="14" r="5" fill="none" stroke="#D6334A" stroke-width="1.4"/>
+          <circle class="chart-dot" cx="280" cy="14" r="3.4" fill="#D6334A"/>
+        </svg>
+        <div class="chart-label" style="position:absolute; right:14px; top:2px; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:var(--ink);">32<span style="font-size:10px; color:var(--muted); font-weight:500;"> заявки/міс</span></div>
+      </div>
+    </div>
+    <div class="chart-caption">Динаміка заявок з реклами за перші 5 місяців ведення</div>
+  </div>
+  </div>
+
+  <div class="card" id="audit">
+    <h2>Подати заявку на співпрацю</h2>
+    <p class="desc">Заповніть форму — зв'яжусь протягом дня, обговоримо деталі та бюджет.</p>
+    <form action="https://formspree.io/f/your_form_id" method="POST">
+      <div class="row2">
+        <div class="field">
+          <label for="name">Ім'я</label>
+          <input id="name" name="Ім'я" type="text" placeholder="Ваше ім'я" required>
+        </div>
+        <div class="field">
+          <label for="contact">Телефон / Telegram</label>
+          <input id="contact" name="Контакт" type="text" placeholder="+380 або @nickname" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="site">Сайт або Instagram</label>
+        <input id="site" name="Сайт" type="text" placeholder="company.com або instagram.com/...">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="niche">Ніша</label>
+          <select id="niche" name="Ніша" required>
+            <option value="" disabled selected>Оберіть</option>
+            <option>Ремонт квартир</option>
+            <option>Будівництво будинків</option>
+            <option>Дизайн інтер'єру</option>
+            <option>Меблі на замовлення</option>
+            <option>Інше</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="city">Місто</label>
+          <input id="city" name="Місто" type="text" placeholder="Напр. Вінниця" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="budget">Орієнтовний рекламний бюджет: <span class="budget-value" id="budgetVal">$1000/міс</span></label>
+        <input type="range" id="budget" name="Бюджет" min="500" max="5000" step="100" value="1000"
+          oninput="document.getElementById('budgetVal').textContent = '$' + this.value + (this.value >= 5000 ? '+' : '') + '/міс';">
+        <div class="range-ticks"><span>$500</span><span>$5000+</span></div>
+      </div>
+      <button class="submit" type="submit">Подати заявку</button>
+      <div class="form-note">Дані не передаються третім особам</div>
+    </form>
+  </div>
+
+  <footer>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2 L20 7 V17 L12 22 L4 17 V7 Z"/><path d="M12 8 V16 M8 12 H16"/></svg>
+      Google Ads Partner-ready настройка
+    </div>
+    <div class="footer-name"><b>Олександр Ізотов</b> · Google Ads спеціаліст</div>
+  </footer>
+
+  </div>
+
+  <div id="casesView" style="display:none;">
+    <a class="back-btn" href="#home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Назад
+    </a>
+    <h2 class="section-title">Кейси</h2>
+    <p class="section-sub">Реальні результати кампаній по містах</p>
+
+    <div class="cases-grid">
+    <a class="case-card reveal-io" href="#case-1" style="animation-delay:.03s">
+      <div class="case-thumb">
+        <div class="dash-bar"><span></span><span></span><span></span><em>Google Ads · Огляд</em></div>
+        <div class="dash-stats">
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>32</div>
+            <div class="stat-lbl">ліди / міс</div>
+          </div>
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M9 13l2.5 2.5L16 11"/></svg>6</div>
+            <div class="stat-lbl">договори</div>
+          </div>
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8l7 7 3-3 6 6"/><path d="M20 12v6h-6"/></svg>−35%</div>
+            <div class="stat-lbl">CPL за 2 міс</div>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 300 60" preserveAspectRatio="none">
+          <polyline points="0,50 60,42 120,38 180,24 240,16 300,8" fill="none" stroke="#D6334A" stroke-width="2.5"/>
+          <circle cx="300" cy="8" r="4" fill="#D6334A"/>
+        </svg>
+      </div>
+      <div class="case-caption">
+        <div class="cc-title">Вінниця · Ремонт квартир</div>
+        <div class="cc-sub">Зростання лідів за 3 місяці ведення →</div>
+      </div>
+    </a>
+
+    <a class="case-card reveal-io" href="#case-2" style="animation-delay:.09s">
+      <div class="case-thumb">
+        <div class="dash-bar"><span></span><span></span><span></span><em>Google Ads · Огляд</em></div>
+        <div class="dash-stats">
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>18</div>
+            <div class="stat-lbl">лідів / міс</div>
+          </div>
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h8l4 4v14H7z"/><path d="M9 13l2.5 2.5L16 11"/></svg>3</div>
+            <div class="stat-lbl">договори</div>
+          </div>
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>4 дні</div>
+            <div class="stat-lbl">до 1-го ліда</div>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 300 60" preserveAspectRatio="none">
+          <polyline points="0,55 60,45 120,30 180,26 240,14 300,10" fill="none" stroke="#D6334A" stroke-width="2.5"/>
+          <circle cx="300" cy="10" r="4" fill="#D6334A"/>
+        </svg>
+      </div>
+      <div class="case-caption">
+        <div class="cc-title">Хмельницький · Будівництво будинків</div>
+        <div class="cc-sub">Запуск з нуля до перших договорів →</div>
+      </div>
+    </a>
+
+    <a class="case-card reveal-io" href="#case-3" style="animation-delay:.15s">
+      <div class="case-thumb">
+        <div class="dash-bar"><span></span><span></span><span></span><em>Google Ads · Огляд</em></div>
+        <div class="dash-stats">
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l7-7 3 3 6-6"/><path d="M14 6h6v6"/></svg>+60%</div>
+            <div class="stat-lbl">заявок</div>
+          </div>
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8l7 7 3-3 6 6"/><path d="M20 12v6h-6"/></svg>−50%</div>
+            <div class="stat-lbl">CPL</div>
+          </div>
+          <div>
+            <div class="stat-num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M9 12h6M12 9v.01M12 15v-.01"/></svg>0₴</div>
+            <div class="stat-lbl">доп. бюджет</div>
+          </div>
+        </div>
+        <svg class="chart" viewBox="0 0 300 60" preserveAspectRatio="none">
+          <polyline points="0,44 60,48 120,40 180,22 240,18 300,6" fill="none" stroke="#D6334A" stroke-width="2.5"/>
+          <circle cx="300" cy="6" r="4" fill="#D6334A"/>
+        </svg>
+      </div>
+      <div class="case-caption">
+        <div class="cc-title">Тернопіль · Меблі на замовлення</div>
+        <div class="cc-sub">Оптимізація акаунту без збільшення бюджету →</div>
+      </div>
+    </a>
+    </div>
+  </div>
+
+  <div id="caseDetailView" style="display:none;">
+    <a class="back-btn" href="#cases">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Назад до кейсів
+    </a>
+    <div class="detail-eyebrow reveal-io" id="modalEyebrow" style="animation-delay:.03s"></div>
+    <h3 class="reveal-io" id="modalTitle" style="animation-delay:.07s"></h3>
+    <p class="reveal-io" id="modalIntro" style="animation-delay:.11s"></p>
+    <div class="detail-image reveal-io" id="modalImage" style="animation-delay:.15s"></div>
+    <div class="result-highlight reveal-io" id="modalHighlight" style="animation-delay:.18s"></div>
+    <div class="detail-body">
+      <div class="detail-col reveal-io" style="animation-delay:.19s">
+        <div class="modal-h">Що було зроблено</div>
+        <ul id="modalDone"></ul>
+      </div>
+      <div class="detail-col reveal-io" style="animation-delay:.24s">
+        <div class="modal-h">Результати</div>
+        <ul id="modalResults"></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="aboutView" style="display:none;">
+    <a class="back-btn" href="#home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      На головну
+    </a>
+    <div class="about-row">
+    <div class="about-photo reveal-io" style="animation-delay:.03s"><img src="about-photo.jpg" alt="Олександр Ізотов"></div>
+    <div>
+    <h2 class="about-name reveal-io" style="animation-delay:.08s">Олександр Ізотов</h2>
+    <p class="about-role reveal-io" style="animation-delay:.12s">Google Ads спеціаліст для ремонтних та будівельних компаній</p>
+    <div class="about-stats reveal-io" style="animation-delay:.15s">
+      <div class="stat"><div class="n">3+</div><div class="l">роки в ніші</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">напрямки роботи</div></div>
+      <div class="stat"><div class="n">$500</div><div class="l">мін. бюджет</div></div>
+    </div>
+    <div class="about-body">
+      <p class="reveal-io" style="animation-delay:.16s">Займаюсь Google Ads <b>виключно для ремонтних та будівельних компаній</b> вже понад <b>3 роки</b> — знаю специфіку ніші, сезонність попиту та типові заперечення клієнтів у цій сфері.</p>
+      <p class="reveal-io" style="animation-delay:.20s">Також веду рекламу для суміжних напрямків: <b>дизайну інтер'єрів</b>, <b>продажу нерухомості</b> та виробників <b>меблів на замовлення</b> — тут працюють ті самі принципи залучення клієнтів із високим чеком.</p>
+      <p class="about-note reveal-io" style="animation-delay:.24s">Розглядаю співпрацю і в інших нішах — якщо рекламна економіка (вартість ліда відносно середнього чека) логічно працює для вашого бізнесу.</p>
+      <p class="reveal-io" style="animation-delay:.28s">Мінімальний бюджет співпраці — <b>$500/міс</b> на рекламу (окремо від вартості ведення).</p>
+    </div>
+    <a class="btn btn-primary about-cta reveal-io" href="#audit" style="animation-delay:.32s">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      Подати заявку на співпрацю
+    </a>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var CASES = {
+    1: {
+      eyebrow: "Вінниця · Ремонт квартир",
+      highlight: "32 заявки на місяць — у 4 рази більше, ніж на старті",
+      title: "Від 8 до 32 заявок на місяць за 3 місяці",
+      intro: "Клієнт раніше отримував ліди лише через сарафанне радіо. Головний запит — стабільний потік заявок без просідань між об'єктами.",
+      chart: [ [0,50],[60,42],[120,38],[180,24],[240,16],[300,8] ],
+      done: [
+        "Аудит попиту: зібрали семантику окремо за типами ремонту (косметичний / капітальний / під ключ)",
+        "Розбили кампанії по районах міста замість однієї загальної",
+        "Зробили посадкову сторінку з формою попередньої кваліфікації бюджету",
+        "Ввели щотижневий контроль CPL і відключення неефективних ключових слів"
+      ],
+      results: [
+        "32 заявки на місяць (з 8 на старті)",
+        "6 підписаних договорів за 3 місяці",
+        "Вартість ліда знижена на 35% за 2 місяці",
+        "ROI кампанії — приблизно 4.2x"
+      ]
+    },
+    2: {
+      eyebrow: "Хмельницький · Будівництво будинків",
+      highlight: "Перший лід — на 4-й день після запуску з нуля",
+      title: "Перший лід за 4 дні після запуску з нуля",
+      intro: "У клієнта не було жодного досвіду з платною рекламою. Задача — швидко перевірити канал і отримати перші контракти.",
+      chart: [ [0,55],[60,45],[120,30],[180,26],[240,14],[300,10] ],
+      done: [
+        "Структура кампаній під запити \"будівництво будинку під ключ\" та \"каркасний будинок\"",
+        "Оголошення з чіткою вказівкою регіону виїзду бригади",
+        "Ремаркетинг на відвідувачів сайту, які не залишили заявку",
+        "Налаштування дзвінкового відстеження для точного підрахунку лідів"
+      ],
+      results: [
+        "Перший лід — на 4-й день після запуску",
+        "18 заявок за перший місяць",
+        "3 підписаних договори в перші 6 тижнів",
+        "Стабільний CPL без різких стрибків з 2-го тижня"
+      ]
+    },
+    3: {
+      eyebrow: "Тернопіль · Меблі на замовлення",
+      highlight: "+60% заявок без збільшення рекламного бюджету",
+      title: "+60% заявок без збільшення бюджету",
+      intro: "Клієнт вже мав акаунт Google Ads, який вели самостійно понад рік, але заявки коштували дорого і йшли нерівномірно.",
+      chart: [ [0,44],[60,48],[120,40],[180,22],[240,18],[300,6] ],
+      done: [
+        "Повна перебудова структури кампаній за категоріями меблів (кухні / шафи-купе / спальні)",
+        "Відключили близько 40% ключових слів, які витрачали бюджет без конверсій",
+        "Додали розширення оголошень (уточнення, посилання, ціни від)",
+        "Перенесли частину бюджету на кампанії з найкращим CPL"
+      ],
+      results: [
+        "Кількість заявок зросла на 60% при тому ж бюджеті",
+        "Вартість ліда знижена вдвічі",
+        "Час до відповіді реклами на пошук скоротився завдяки кращій релевантності",
+        "Клієнт лишається на веденні понад 8 місяців"
+      ]
+    }
+  };
+
+  function buildChart(points){
+    var pts = points.map(function(p){ return p[0]+','+p[1]; }).join(' ');
+    var last = points[points.length-1];
+    return '<svg viewBox="0 0 300 60" preserveAspectRatio="none" style="width:100%;height:100%;">' +
+      '<polyline points="'+pts+'" fill="none" stroke="#D6334A" stroke-width="2.5"/>' +
+      '<circle cx="'+last[0]+'" cy="'+last[1]+'" r="4" fill="#D6334A"/></svg>';
+  }
+
+  function renderCase(id){
+    var c = CASES[id];
+    if(!c) return false;
+    document.getElementById('modalEyebrow').textContent = c.eyebrow;
+    document.getElementById('modalTitle').textContent = c.title;
+    document.getElementById('modalIntro').textContent = c.intro;
+    document.getElementById('modalHighlight').textContent = c.highlight;
+    document.getElementById('modalImage').innerHTML = buildChart(c.chart);
+    document.getElementById('modalDone').innerHTML = c.done.map(function(t){ return '<li>'+t+'</li>'; }).join('');
+    document.getElementById('modalResults').innerHTML = c.results.map(function(t){ return '<li>'+t+'</li>'; }).join('');
+    return true;
+  }
+
+  function showView(view){
+    document.getElementById('homeView').style.display = (view === 'home') ? 'block' : 'none';
+    document.getElementById('casesView').style.display = (view === 'cases') ? 'block' : 'none';
+    document.getElementById('caseDetailView').style.display = (view === 'detail') ? 'block' : 'none';
+    document.getElementById('aboutView').style.display = (view === 'about') ? 'block' : 'none';
+    window.scrollTo(0,0);
+  }
+
+  // Reads the URL hash and shows the matching view.
+  // Supported links: #home, #cases, #case-1, #case-2, #case-3, #about, #audit
+  function route(){
+    var hash = window.location.hash.replace('#','');
+    if (hash.indexOf('case-') === 0){
+      var id = hash.replace('case-','');
+      if (renderCase(id)){ showView('detail'); return; }
+    }
+    if (hash === 'cases'){ showView('cases'); return; }
+    if (hash === 'about'){ showView('about'); return; }
+    showView('home');
+    if (hash === 'audit'){
+      setTimeout(function(){
+        var el = document.getElementById('audit');
+        if(el) el.scrollIntoView({behavior:'smooth'});
+      }, 60);
+    }
+  }
+
+  window.addEventListener('hashchange', route);
+  window.addEventListener('DOMContentLoaded', route);
+  route();
+</script>
+</body>
+</html>
